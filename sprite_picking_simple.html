@@ -1,0 +1,73 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>HTML Events on 3D objects</title>
+    <script type='text/javascript' src='https://x3dom.org/download/dev/x3dom-full.debug.js'> </script>
+    <link rel='stylesheet' type='text/css' href='https://www.x3dom.org/download/x3dom.css'/>
+    
+     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.0.min.js" ></script>
+    
+    
+    <script>
+    	//Handle click on the shape
+    	function handleClick(event)
+    	{
+    		
+    		var r = event.hitPnt[0];
+    		var g = event.hitPnt[1];
+    		var b = event.hitPnt[2];
+
+    		//Display color values
+    		$('#colR').html(r);
+    		$('#colG').html(g);
+    		$('#colB').html(b);
+    		
+    		//Visualize color
+    		$('#colorBox').css('background-color', 'rgb('+r+','+g+','+b+')');
+    	}
+        </script>
+</head>
+
+<body>
+
+<h1>Object picking example</h1>
+
+<p>
+Click on any shape to get the color of the hitting point.
+<br><br>
+Press "d" to open the debug window including a preview of the picking buffer.
+</p>
+
+<X3D  id="boxes" showStat="false" showLog="false" x="0px" y="0px" width="500px" height="500px">
+	<scene def='scene' pickMode="color">
+		<viewpoint position="-0.68726 2.21058 3.58106" orientation="-0.83308 -0.48109 -0.27301 0.37006"></viewpoint>
+			<shape onclick="handleClick(event)">
+				<appearance>
+					<material></material>
+					<!--					<imagetexture url="../circle_texture.png"></imagetexture>-->
+					<PointProperties pointSizeMaxValue='100' pointSizeMinValue='1' pointSizeScaleFactor='100' attenuation='1 0 0' containerField='pointProperties'></PointProperties>
+				</appearance>
+				<PointSet id="ps">
+					<Coordinate point='0 0 0, 1 1 1, 2 2 2'></Coordinate>
+					<Color color='1 0 0, 0 1 0, 1 1 0'></Color>
+				</PointSet>
+			</shape>
+		</Group>
+	</scene>
+</X3D>
+
+<div style="position:absolute;left:550px;top:100px;width:200px">
+	<h3>Last clicked Color:</h3>
+	<table style="font-size:1em;">
+		<tr><td>R: </td><td id="colR">-</td></tr>
+		<tr><td>G: </td><td id="colG">-</td></tr>
+		<tr><td>B: </td><td id="colB">-</td></tr>
+	</table>
+	<div id="colorBox" style="width:150px;height:25px;background-color:#FFF;margin-top:10px;"></div>
+	
+</div>
+
+
+</body>
+</html>
